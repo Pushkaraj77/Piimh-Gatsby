@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import client from "../client";
+// import { NavLink, useLocation } from "react-router-dom";
+// import client from "../client";
 
 const Header = () => {
-  const [menuItems, setMenuItems] = useState([]);
-  const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for responsive menu toggle
+  // const [menuItems, setMenuItems] = useState([]);
+  // const location = useLocation();
+  // const [isMenuOpen, setIsMenuOpen] = useState(false); // State for responsive menu toggle
 
-  useEffect(() => {
-    async function getMenuItems() {
-      const entries = await client.getEntries({
-        content_type: "menu",
-      });
-      setMenuItems(entries.items.reverse());
-    }
-    getMenuItems();
-  }, []);
+  // useEffect(() => {
+  //   async function getMenuItems() {
+  //     const entries = await client.getEntries({
+  //       content_type: "menu",
+  //     });
+  //     setMenuItems(entries.items.reverse());
+  //   }
+  //   getMenuItems();
+  // }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const toggleMenu = () => {
+  //   setIsMenuOpen(!isMenuOpen);
+  // };
 
   return (
     <>
-      <header>
+      {/* <header>
         <div className="container">
           <div className="d-flex">
             <div className="logo">
@@ -50,7 +50,8 @@ const Header = () => {
             </nav>
           </div>
         </div>
-      </header>
+      </header> */}
+      <h1>Header</h1>
     </>
   );
 };

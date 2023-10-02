@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import client from "../client";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+// import { useParams } from "react-router-dom";
+// import client from "../client";
+// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const StayConnected = () => {
-  const { slug } = useParams();
-  const [entry, setEntry] = useState([]);
+  // const { slug } = useParams();
+  // const [entry, setEntry] = useState([]);
 
-  useEffect(() => {
-    const fetchPage = async () => {
-      try {
-        const response = await client.getEntries({
-          content_type: "component",
-          "sys.id": "44domFAPPtLBfKhcsj6tye",
-        });
-        console.log(response);
-        if (response.items.length) {
-          setEntry(response.items);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPage();
-  }, [slug]);
+  // useEffect(() => {
+  //   const fetchPage = async () => {
+  //     try {
+  //       const response = await client.getEntries({
+  //         content_type: "component",
+  //         "sys.id": "44domFAPPtLBfKhcsj6tye",
+  //       });
+  //       console.log(response);
+  //       if (response.items.length) {
+  //         setEntry(response.items);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchPage();
+  // }, [slug]);
 
   return (
     <>
-      <section className="stay-connected">
+      {/* <section className="stay-connected">
         {entry.map((item) => {
           const { title, subTitle } = item.fields;
           const imageUrl = item.fields.image.fields.file.url;
@@ -45,7 +45,7 @@ const StayConnected = () => {
                       <div className="basicComponent_content">
                         <div>
                           {/* Manually create and render the Google Maps iframe */}
-                          <iframe
+                          {/* <iframe
                             src={googleMapsUrl}
                             width="100%"
                             height="400"
@@ -64,7 +64,8 @@ const StayConnected = () => {
             </React.Fragment>
           );
         })}
-      </section>
+      </section> */} 
+      <h1>Stay Connected</h1>
     </>
   );
 };

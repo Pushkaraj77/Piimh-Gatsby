@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Aos from "aos";
-
-import { Link } from "react-router-dom";
+import { Link } from "gatsby";
 const Footer = () => {
   useEffect(() => {
     Aos.init({ duration: 1000 });

@@ -15,10 +15,17 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^15.17.2",
     "aos": "^2.3.4",
+    "babel-plugin-styled-components": "^2.1.4",
     "contentful": "^10.5.3",
     "gatsby": "^5.12.4",
+    "gatsby-plugin-image": "^3.12.0",
+    "gatsby-plugin-styled-components": "^6.12.0",
+    "gatsby-source-contentful": "^8.12.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "styled-components": "^6.0.8"
   }
 }

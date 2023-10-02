@@ -1,45 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import client from "../client";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+// import { useParams } from "react-router-dom";
+// import client from "../client";
+// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const Philosophy = () => {
-  const { slug } = useParams();
-  const [entry, setEntry] = useState([]);
+//   const { slug } = useParams();
+//   const [entry, setEntry] = useState([]);
 
-  useEffect(() => {
-    const fetchPage = async () => {
-      try {
-        const response = await client.getEntries({
-          content_type: "component",
-          "sys.id": "lWGmoCodntEZhNx8FHv5s",
-        });
-        console.log(response);
-        if (response.items.length) {
-          setEntry(response.items);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPage();
-  }, [slug]);
+//   useEffect(() => {
+//     const fetchPage = async () => {
+//       try {
+//         const response = await client.getEntries({
+//           content_type: "component",
+//           "sys.id": "lWGmoCodntEZhNx8FHv5s",
+//         });
+//         console.log(response);
+//         if (response.items.length) {
+//           setEntry(response.items);
+//         }
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+//     fetchPage();
+//   }, [slug]);
 
- const options = {
-  renderNode: {
-    'heading-3 & heading-4': (node, children) => (
-      <div>
-        <h3 className="your-h3-class">{children}</h3>
-        <h4 className="your-h4-class">{children}</h4>
-      </div>
-    ),
-  },
-};
+//  const options = {
+//   renderNode: {
+//     'heading-3 & heading-4': (node, children) => (
+//       <div>
+//         <h3 className="your-h3-class">{children}</h3>
+//         <h4 className="your-h4-class">{children}</h4>
+//       </div>
+//     ),
+//   },
+// };
 
 
   return (
     <>
-      <section className="philosophy">
+      {/* <section className="philosophy">
         {entry.map((item) => {
           const { title, description, subTitle } = item.fields;
           const imageUrl = item.fields.image.fields.file.url;
@@ -66,7 +66,8 @@ const Philosophy = () => {
             </React.Fragment>
           );
         })}
-      </section>
+      </section> */}
+      <h1>Philosophy</h1>
     </>
   );
 };

@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import client from "../client";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+// import { useParams } from "react-router-dom";
+// import client from "../client";
+// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const Director = () => {
-  const { slug } = useParams();
-  const [entry, setEntry] = useState([]);
+  // const { slug } = useParams();
+  // const [entry, setEntry] = useState([]);
 
-  useEffect(() => {
-    const fetchPage = async () => {
-      try {
-        const response = await client.getEntries({
-          content_type: "component",
-          "sys.id": "2Aq8vl8W4kEQtRerKjccgg",
-        });
-        console.log(response);
-        if (response.items.length) {
-          setEntry(response.items);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPage();
-  }, [slug]);
+  // useEffect(() => {
+  //   const fetchPage = async () => {
+  //     try {
+  //       const response = await client.getEntries({
+  //         content_type: "component",
+  //         "sys.id": "2Aq8vl8W4kEQtRerKjccgg",
+  //       });
+  //       console.log(response);
+  //       if (response.items.length) {
+  //         setEntry(response.items);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchPage();
+  // }, [slug]);
 
   return (
     <>
-      <section className="director">
+      {/* <section className="director">
         {entry.map((item) => {
           const { title, description, subTitle, ctaButton, link } = item.fields;
           const imageUrl = item.fields.image.fields.file.url;
@@ -57,7 +57,8 @@ const Director = () => {
             </React.Fragment>
           );
         })}
-      </section>
+      </section> */}
+      <h1>Director</h1>
     </>
   );
 };

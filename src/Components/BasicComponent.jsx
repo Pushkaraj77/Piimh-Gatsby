@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import client from "../client";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+// import { useParams } from "react-router-dom";
+// import client from "../client";
+// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const BasicComponent = () => {
-  const { slug } = useParams();
-  const [entry, setEntry] = useState([]);
+  // const { slug } = useParams();
+  // const [entry, setEntry] = useState([]);
 
-  useEffect(() => {
-    const fetchPage = async () => {
-      try {
-        const response = await client.getEntries({
-          content_type: "component",
-          "sys.id":"j1FEf5PgGNafEVuvrRmSE",
-        });
-        if (response.items.length) {
-          setEntry(response.items);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPage();
-  }, [slug]);
+  // useEffect(() => {
+  //   const fetchPage = async () => {
+  //     try {
+  //       const response = await client.getEntries({
+  //         content_type: "component",
+  //         "sys.id":"j1FEf5PgGNafEVuvrRmSE",
+  //       });
+  //       if (response.items.length) {
+  //         setEntry(response.items);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchPage();
+  // }, [slug]);
 
   return (
     <>
-      <section className="Home-about">
+      {/* <section className="Home-about">
         {entry.map((item) => {
           const { title, description, subTitle, bgColor, ctaButton, link } =
             item.fields;
@@ -56,7 +56,8 @@ const BasicComponent = () => {
             </React.Fragment>
           );
         })}
-      </section>
+      </section> */}
+      <h1>basicComponent</h1>
     </>
   );
 };
