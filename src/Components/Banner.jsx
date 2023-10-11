@@ -11,14 +11,13 @@ const query = graphql`
       nodes {
         title
         description {
-          references {
-            gatsbyImageData
-          }
           raw
+          references {
+            url
+          }
         }
         backgroundImage {
-          id
-          gatsbyImageData
+          url
         }
       }
     }
@@ -37,9 +36,11 @@ const Banner = () => {
       try {
         const entries = data.allContentfulBannerSection.nodes;
         setBannerItems(entries.reverse());
-        console.log(entries);
+        // console.log(entries);
+        // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
+        // console.log(entries[0]?.description);
         setBackgroundImage(
-          entries[0]?.backgroundImage?.gatsbyImageData || ""
+          entries[0]?.backgroundImage?.url || ""
         );
       } catch (error) {
         console.error("Error fetching menu items:", error);
@@ -48,52 +49,53 @@ const Banner = () => {
     getMenuItems();
   }, [slug]);
 
-  // const renderCustomRichTextHeading = (node, children) => (
-  //   <div className="custom-rich-text-heading">
-  //     {children.map((child, index) => (
-  //       <h1 key={index}>{child}</h1>
-  //     ))}
-  //   </div>
-  // );
+  const renderCustomRichTextHeading = (node, children) => (
+    <div className="custom-rich-text-heading">
+      {children.map((child, index) => (
+        <h1 key={index}>{child}</h1>
+      ))}
+    </div>
+  );
 
-  // const renderCustomRichTextSubheading = (node, children) => (
-  //   <div className="custom-rich-text-subheading">
-  //     {children.map((child, index) => (
-  //       <h2 key={index}>{child}</h2>
-  //     ))}
-  //   </div>
-  // );
+  const renderCustomRichTextSubheading = (node, children) => (
+    <div className="custom-rich-text-subheading">
+      {children.map((child, index) => (
+        <h2 key={index}>{child}</h2>
+      ))}
+    </div>
+  );
 
-  // const headingRenderers = {
-  //   [BLOCKS.HEADING_1]: renderCustomRichTextHeading,
-  //   [BLOCKS.HEADING_2]: renderCustomRichTextSubheading,
-  // };
+  const headingRenderers = {
+    [BLOCKS.HEADING_1]: renderCustomRichTextHeading,
+    [BLOCKS.HEADING_2]: renderCustomRichTextSubheading,
+  };
 
-  // const renderRichText = (richText) => {
-  //   if (richText) {
-  //     return (
-  //       <div className="custom-rich-text-container">
-  //         {documentToReactComponents(richText, {
-  //           renderNode: {
-  //             ...headingRenderers,
-  //             [BLOCKS.EMBEDDED_ASSET]: (node) => {
-  //               const {title} = node.title;
-  //               const {description} = node.description.raw;
-  //               const {imageUrl} = node.description.references.gatsbyImageData;
-  //               const altText = description || title || "Image";
-  //               return (
-  //                 <div className="custom-rich-text-block">
-  //                   <GatsbyImage image = {imageUrl} alt = {altText}/>
-  //                 </div>
-  //               );
-  //             },
-  //           },
-  //         })}
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // };
+  const renderRichText = (richText) => {
+    if (richText) {
+      return (
+        <div className="custom-rich-text-container">
+          {documentToReactComponents(richText, {
+            renderNode: {
+              ...headingRenderers,
+              [BLOCKS.EMBEDDED_ASSET]: (node) => {
+              //   // const {title} = node.title;
+              //   // const {description} = JSON.parse(node.description.raw);
+              //   // const {imageUrl} = node.description.references[0].url;
+              //   // const altText = description || title || "Image";
+                return (
+                  <div className="custom-rich-text-block">
+                    {console.log(node)}
+              {/* //       <GatsbyImage image = {imageUrl} alt = {altText}/> */}
+                  </div>
+                );
+              },
+            },
+          })}
+        </div>
+      );
+    }
+    return null;
+  };
 
 
   return (
@@ -106,8 +108,10 @@ const Banner = () => {
       <div className="d-flex">
         {bannerItems.map((entries) => (
           <React.Fragment key={entries.id}>
-            <h1>{entries.title}</h1>
-            <GatsbyImage image = {entries.description.references.gatsbyImageData} alt={entries.id} />
+            {renderRichText(JSON.parse(entries.description.raw))}
+            {/* {console.log(entries.description.raw[1]?.content.value)} */}
+            {/* <h1>{entries.title}</h1> */}
+            {/* <GatsbyImage image = {entries.description.references.url} alt={entries.id} /> */}
           </React.Fragment>
         ))}
       </div>
