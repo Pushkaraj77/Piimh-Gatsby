@@ -14,6 +14,7 @@ const query = graphql`
           raw
           references {
             url
+            gatsbyImageData
           }
         }
         backgroundImage {
@@ -29,16 +30,16 @@ const Banner = () => {
   const [backgroundImage, setBackgroundImage] = useState("");
   const { slug } = useParams();
   const data = useStaticQuery(query);
+  const entries = data.allContentfulBannerSection.nodes;
 
 
  useEffect(() => {
     async function getMenuItems() {
       try {
-        const entries = data.allContentfulBannerSection.nodes;
         setBannerItems(entries.reverse());
         // console.log(entries);
         // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-        // console.log(entries[0]?.description);
+        console.log(entries[0]?.description.references[0].url);
         setBackgroundImage(
           entries[0]?.backgroundImage?.url || ""
         );
@@ -78,14 +79,13 @@ const Banner = () => {
             renderNode: {
               ...headingRenderers,
               [BLOCKS.EMBEDDED_ASSET]: (node) => {
-              //   // const {title} = node.title;
-              //   // const {description} = JSON.parse(node.description.raw);
-              //   // const {imageUrl} = node.description.references[0].url;
-              //   // const altText = description || title || "Image";
+                const {content} = node;
+                const url = entries[0].description.references[0].gatsbyImageData;
+                const altText = "Image";
                 return (
                   <div className="custom-rich-text-block">
                     {console.log(node)}
-              {/* //       <GatsbyImage image = {imageUrl} alt = {altText}/> */}
+                    <GatsbyImage image = {url} alt = {altText}/>
                   </div>
                 );
               },
@@ -109,9 +109,6 @@ const Banner = () => {
         {bannerItems.map((entries) => (
           <React.Fragment key={entries.id}>
             {renderRichText(JSON.parse(entries.description.raw))}
-            {/* {console.log(entries.description.raw[1]?.content.value)} */}
-            {/* <h1>{entries.title}</h1> */}
-            {/* <GatsbyImage image = {entries.description.references.url} alt={entries.id} /> */}
           </React.Fragment>
         ))}
       </div>
