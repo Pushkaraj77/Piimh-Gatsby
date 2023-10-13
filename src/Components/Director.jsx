@@ -11,7 +11,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 const query = graphql`
   query {
     allContentfulComponent(
-      filter: {title: {eq: "Director and Lead Trainer"}, pageType: {eq: "Home"}}
+      filter: { title: { eq: "Director and Lead Trainer" }, pageType: { eq: "Home" } }
     ) {
       nodes {
         title
@@ -20,13 +20,15 @@ const query = graphql`
         description {
           raw
           references {
-            url
+            ... on ContentfulAsset {
+              gatsbyImageData
+            }
           }
         }
         ctaButton
         link
         image {
-          url
+          gatsbyImageData
         }
       }
     }
@@ -75,14 +77,12 @@ const Director = () => {
   return (
     <>
 <section className="director">
-        {directorItems.map((item) => {
+      {directorItems.map((item) => {
           const { title, description, subTitle, ctaButton, link, image } = item;
 
           // Check if item.description exists before accessing its properties
           const rawDescription = description ? description.raw : "";
 
-          const imageUrl = image && image.url ? image.url : "";
-          
           let richTextContent = null;
           try {
             // Check if rawDescription is a non-empty string before parsing
@@ -111,10 +111,10 @@ const Director = () => {
                       </a>
                     </div>
                     <div className="right_img">
-                          {/* Use GatsbyImage for better performance */}
-                      {description && description.raw && JSON.parse(description.raw).references && (
+                      {/* Use GatsbyImage for better performance */}
+                      {image && (
                         <GatsbyImage
-                          image={entries[0].description.references[0].gatsbyImageData}
+                          image={image.gatsbyImageData}
                           alt={title}
                         />
                       )}
