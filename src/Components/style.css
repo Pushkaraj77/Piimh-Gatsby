@@ -111,22 +111,22 @@
 
 /* Director Section */
 section.director {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 70px 0px;
     background: #fff;
 }
 
-.director .basicComponent{
-    padding: 10px  10px;
+.director .basicComponent {
+    padding: 10px 10px;
 }
 
-.director .container{
-    padding: 10px  10px;
-    
+.director .container {
+    padding: 10px 10px;
 }
 
-.director .title_subtitle{
-    margin-left: 100px;
-    padding: 10px  10px;
+.director .title_subtitle {
     text-align: left;
 }
 
@@ -141,23 +141,26 @@ section.director {
     color: #F37042;
     font-family: "Merriweather", sans-serif;
     font-size: 2rem;
-
-}
-.director .basicComponent_wrapper{
-    padding: 10px  10px;
 }
 
-.director .basicComponent_content p{
-    padding: 10px  10px;
+.director .basicComponent_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.director .basicComponent_content p {
+    padding: 10px 10px;
     font-family: "Merriweather", sans-serif;
 }
 
-.director .cta-button{
-    padding: 10px  10px;
+.director .cta-button {
+    padding: 10px 10px;
     margin: 0px 30px;
 }
 
 .director .right_img img {
-    height: 50%;
-    width: 50%;
+    /* height: 50%;
+    width: 50%; */
+    height: 100%;
+    width: 100%; 
 }
