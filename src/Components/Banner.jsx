@@ -5,15 +5,18 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { graphql, useStaticQuery} from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
+
+
 const query = graphql`
-  query {
-    allContentfulBannerSection {
+  query MyQuery($slug: StringQueryOperatorInput = {}){
+    allContentfulBannerSection(filter: {slug: {eq: ${slug}}}}) {
       nodes {
+        id
         title
+        slug
         description {
           raw
           references {
-            url
             gatsbyImageData
           }
         }
@@ -24,11 +27,19 @@ const query = graphql`
     }
   }
 `
+const Slugrelate = () => {
+  const { slug } = useParams();
+  return (
+    slug
+  );
+
+}
+
 
 const Banner = () => {
   const [bannerItems, setBannerItems] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
-  const { slug } = useParams();
+  
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
 
@@ -37,9 +48,20 @@ const Banner = () => {
     async function getMenuItems() {
       try {
         setBannerItems(entries.reverse());
-        // console.log(entries);
+        // try {
+        //   for (let index = 0; index < entries.length; index++) {
+        //     if (slug === entries[index].slug) {
+        //       const data = entries[index];
+        //       console.log(data);
+        //     }
+            
+        //   }
+          
+        // } catch (error) {
+          
+        // }
         // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-        console.log(entries[0]?.description.references[0].url);
+        // console.log(entries[0]?.description.references[0].url);
         setBackgroundImage(
           entries[0]?.backgroundImage?.url || ""
         );
@@ -48,7 +70,7 @@ const Banner = () => {
       }
     }
     getMenuItems();
-  }, [slug]);
+  }, [Slugrelate()]);
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -79,7 +101,6 @@ const Banner = () => {
             renderNode: {
               ...headingRenderers,
               [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const {content} = node;
                 const url = entries[0].description.references[0].gatsbyImageData;
                 const altText = "Image";
                 return (
