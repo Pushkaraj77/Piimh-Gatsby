@@ -9,6 +9,7 @@ const AboutUs = () => {
     <>
       {/* Other content */}
       <Banner slug={slug} />
+      <h1>about us page</h1>
       {/* Other content */}
     </>
   );
