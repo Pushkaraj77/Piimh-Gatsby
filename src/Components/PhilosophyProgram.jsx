@@ -131,7 +131,7 @@ const PhilosophyProgram = () => {
           );
         })}
       </section>
-      <h1>PhilProgram</h1>
+      {/* <h1>PhilProgram</h1> */}
     </>
   );
 };
