@@ -8,8 +8,8 @@ import { GatsbyImage } from "gatsby-plugin-image";
 
 
 const query = graphql`
-  query MyQuery($slug: StringQueryOperatorInput = {}){
-    allContentfulBannerSection(filter: {slug: {eq: ${slug}}}}) {
+  query MyQuery{
+    allContentfulBannerSection {
       nodes {
         id
         title

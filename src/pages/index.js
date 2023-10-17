@@ -9,6 +9,7 @@ const IndexPage = () => (
 
   <Layout>
     <Home />
+    {/* <AboutUs/> */}
   </Layout>
 );
 
