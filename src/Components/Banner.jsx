@@ -5,11 +5,9 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { graphql, useStaticQuery} from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
-
-
 const query = graphql`
-  query MyQuery{
-    allContentfulBannerSection {
+  query MyQuery ($slug: String){
+    allContentfulBannerSection (filter: { slug: {eq: $slug}}){
       nodes {
         id
         title
@@ -27,18 +25,12 @@ const query = graphql`
     }
   }
 `
-const Slugrelate = () => {
-  const { slug } = useParams();
-  return (
-    slug
-  );
-
-}
-
 
 const Banner = () => {
   const [bannerItems, setBannerItems] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
+  let slug = useParams();
+  slug = String(slug);
   
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
@@ -47,7 +39,8 @@ const Banner = () => {
  useEffect(() => {
     async function getMenuItems() {
       try {
-        setBannerItems(entries.reverse());
+        setBannerItems(entries);
+        console.log(slug);
         // try {
         //   for (let index = 0; index < entries.length; index++) {
         //     if (slug === entries[index].slug) {
@@ -70,7 +63,7 @@ const Banner = () => {
       }
     }
     getMenuItems();
-  }, [Slugrelate()]);
+  }, [slug]);
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -105,7 +98,7 @@ const Banner = () => {
                 const altText = "Image";
                 return (
                   <div className="custom-rich-text-block">
-                    {console.log(node)}
+                    {/* {console.log(node)} */}
                     <GatsbyImage image = {url} alt = {altText}/>
                   </div>
                 );
@@ -127,7 +120,7 @@ const Banner = () => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {bannerItems.map((entries) => (
+        {bannerItems.slice().reverse().map((entries) => (
           <React.Fragment key={entries.id}>
             {renderRichText(JSON.parse(entries.description.raw))}
           </React.Fragment>
