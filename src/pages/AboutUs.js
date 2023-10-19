@@ -11,12 +11,14 @@ import Footer from "../Components/Footer";
 
 
 const AboutUs = () => {
-  const slug = "about-page-banner"; // Set the slug for the about page banner
-  console.log("Slug for About Page:", slug);
+  // const slug = "about-page-banner"; // Set the slug for the about page banner
+  // console.log("Slug for About Page:", slug);
+  const id = "6STR6Eve39x5dXFgKBIObZ";
+  console.log("Slug for Home Page:", id);
   return (
     <>
       <Header />
-      <Banner slug={slug} />
+      <Banner slug={id} />
       <BasicComponent/>
       <Philosophy/>
       <PhilosophyProgram/>
