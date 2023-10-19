@@ -47,7 +47,7 @@ const Header = () => {
             </div>
             <nav className={isMenuOpen ? "open" : ""}>
               <ul>
-                {menuItems.slice().reverse().map((entries) => (
+                {menuItems.slice().map((entries) => (
                   <li key={entries.id}>
                     <Link
                       to={entries.link}
