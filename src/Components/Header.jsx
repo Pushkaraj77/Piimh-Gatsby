@@ -22,6 +22,9 @@ const Header = () => {
   useEffect(() => {
     async function getMenuItems() {
       const entries = data.allContentfulMenu.nodes;
+      const sort_name = entries[0].name;
+      // console.log(entries);
+      // console.log(sort_name);
       setMenuItems(entries);
     }
     getMenuItems();

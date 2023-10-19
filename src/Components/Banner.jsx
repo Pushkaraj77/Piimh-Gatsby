@@ -6,14 +6,15 @@ import { graphql, useStaticQuery} from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
 const query = graphql`
-  query {
-    allContentfulBannerSection {
+  query MyQuery ($slug: String){
+    allContentfulBannerSection (filter: { slug: {eq: $slug}}){
       nodes {
+        id
         title
+        slug
         description {
           raw
           references {
-            url
             gatsbyImageData
           }
         }
@@ -28,7 +29,9 @@ const query = graphql`
 const Banner = () => {
   const [bannerItems, setBannerItems] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
-  const { slug } = useParams();
+  let slug = useParams();
+  slug = String(slug);
+  
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
 
@@ -36,10 +39,22 @@ const Banner = () => {
  useEffect(() => {
     async function getMenuItems() {
       try {
-        setBannerItems(entries.reverse());
-        // console.log(entries);
+        setBannerItems(entries);
+        console.log(slug);
+        // try {
+        //   for (let index = 0; index < entries.length; index++) {
+        //     if (slug === entries[index].slug) {
+        //       const data = entries[index];
+        //       console.log(data);
+        //     }
+            
+        //   }
+          
+        // } catch (error) {
+          
+        // }
         // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-        console.log(entries[0]?.description.references[0].url);
+        // console.log(entries[0]?.description.references[0].url);
         setBackgroundImage(
           entries[0]?.backgroundImage?.url || ""
         );
@@ -79,12 +94,11 @@ const Banner = () => {
             renderNode: {
               ...headingRenderers,
               [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const {content} = node;
                 const url = entries[0].description.references[0].gatsbyImageData;
                 const altText = "Image";
                 return (
                   <div className="custom-rich-text-block">
-                    {console.log(node)}
+                    {/* {console.log(node)} */}
                     <GatsbyImage image = {url} alt = {altText}/>
                   </div>
                 );
@@ -106,7 +120,7 @@ const Banner = () => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {bannerItems.map((entries) => (
+        {bannerItems.slice().reverse().map((entries) => (
           <React.Fragment key={entries.id}>
             {renderRichText(JSON.parse(entries.description.raw))}
           </React.Fragment>
