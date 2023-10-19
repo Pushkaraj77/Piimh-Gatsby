@@ -22,7 +22,7 @@ const Header = () => {
   useEffect(() => {
     async function getMenuItems() {
       const entries = data.allContentfulMenu.nodes;
-      setMenuItems(entries.reverse());
+      setMenuItems(entries);
     }
     getMenuItems();
   }, []);
@@ -44,7 +44,7 @@ const Header = () => {
             </div>
             <nav className={isMenuOpen ? "open" : ""}>
               <ul>
-                {menuItems.map((entries) => (
+                {menuItems.slice().reverse().map((entries) => (
                   <li key={entries.id}>
                     <Link
                       to={entries.link}
