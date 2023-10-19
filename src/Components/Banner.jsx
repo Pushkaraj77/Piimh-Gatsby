@@ -5,30 +5,12 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { graphql, useStaticQuery} from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
-const query = graphql`
-  query {
-    allContentfulBannerSection {
-      nodes {
-        title
-        description {
-          raw
-          references {
-            url
-            gatsbyImageData
-          }
-        }
-        backgroundImage {
-          url
-        }
-      }
-    }
-  }
-`
-
-const Banner = () => {
+const Banner = (props) => {
   const [bannerItems, setBannerItems] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
-  const { slug } = useParams();
+  const page_id = props;
+  const read_slug = page_id.slug;
+
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
 
@@ -36,8 +18,8 @@ const Banner = () => {
  useEffect(() => {
     async function getMenuItems() {
       try {
-        setBannerItems(entries.reverse());
-        // console.log(entries);
+        setBannerItems(entries);
+        console.log(page_id.slug);
         // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
         console.log(entries[0]?.description.references[0].url);
         setBackgroundImage(
@@ -48,7 +30,7 @@ const Banner = () => {
       }
     }
     getMenuItems();
-  }, [slug]);
+  }, [read_slug]);
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -84,7 +66,7 @@ const Banner = () => {
                 const altText = "Image";
                 return (
                   <div className="custom-rich-text-block">
-                    {console.log(node)}
+                    {/* {console.log(node)} */}
                     <GatsbyImage image = {url} alt = {altText}/>
                   </div>
                 );
@@ -106,7 +88,7 @@ const Banner = () => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {bannerItems.map((entries) => (
+        {bannerItems.slice().map((entries) => (
           <React.Fragment key={entries.id}>
             {renderRichText(JSON.parse(entries.description.raw))}
           </React.Fragment>
@@ -118,3 +100,25 @@ const Banner = () => {
 };
 
 export default Banner;
+
+export const query = graphql`
+  query MyQuery ($slug: String){
+    allContentfulBannerSection (filter: { slug: {eq: $slug}}){
+      nodes {
+        id
+        title
+        slug
+        contentful_id
+        description {
+          raw
+          references {
+            gatsbyImageData
+          }
+        }
+        backgroundImage {
+          url
+        }
+      }
+    }
+  }
+`
