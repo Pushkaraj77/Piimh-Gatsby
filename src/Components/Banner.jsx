@@ -49,7 +49,6 @@ const Banner = (props) => {
   
   
   
-  
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -106,17 +105,18 @@ const Banner = (props) => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {renderEntry ? (
+          {/* {renderEntry ? (
           <React.Fragment>
             {renderRichText(JSON.parse(renderEntry.description.raw))}
           </React.Fragment>
-        ) : (
-          bannerItems.map((entries) => (
+        ) : (   */}
+          {bannerItems.map((entries) => (
             <React.Fragment key={entries.id}>
               {renderRichText(JSON.parse(entries.description.raw))}
             </React.Fragment>
-          )))
-        }
+          ))
+           
+        } 
       </div>
 
       </div>
