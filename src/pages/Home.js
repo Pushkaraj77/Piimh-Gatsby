@@ -15,7 +15,7 @@ const Home = () => {
     <>
       <Header/>
       <Banner slug={id} />
-      {/* <BasicComponent/> */}
+      <BasicComponent/>
       <Philosophy/>
       <PhilosophyProgram/>
       <Director/>

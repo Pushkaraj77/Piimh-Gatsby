@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import client from "../client";
-// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const BasicComponent = () => {
-  // const { slug } = useParams();
-  // const [entry, setEntry] = useState([]);
+  const { slug } = useParams();
+  const [entry, setEntry] = useState([]);
 
   // useEffect(() => {
   //   const fetchPage = async () => {
