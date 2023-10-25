@@ -5,22 +5,42 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { graphql, useStaticQuery} from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
+
+
 const Banner = (props) => {
   const [bannerItems, setBannerItems] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState("");
+  const [renderEntry, setRenderEntry] = useState([]);
   const page_id = props;
   const read_slug = page_id.slug;
 
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
 
+  
 
  useEffect(() => {
     async function getMenuItems() {
       try {
         setBannerItems(entries);
-        console.log(page_id.slug);
-        // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
+        //console.log(page_id.slug);
+        try {
+           await bannerItems.forEach(element => {
+           console.log(element.contentful_id);
+
+           if (element.contentful_id == read_slug) {
+            //  const renderEntry = element;
+             setRenderEntry(element);
+             console.log(renderEntry);
+
+
+           }
+            //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
+          });
+        } catch (error) {
+          console.error("Error fetching menu items:", error);
+        }
+          //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
         // console.log(entries[0]?.description.references[0].url);
         setBackgroundImage(
           entries[0]?.backgroundImage?.url || ""
@@ -87,7 +107,7 @@ const Banner = (props) => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {bannerItems.slice().map((entries) => (
+        {renderEntry.map((entries) => (
           <React.Fragment key={entries.id}>
             {renderRichText(JSON.parse(entries.description.raw))}
           </React.Fragment>
