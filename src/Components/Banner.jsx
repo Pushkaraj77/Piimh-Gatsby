@@ -19,38 +19,36 @@ const Banner = (props) => {
 
   
 
- useEffect(() => {
+  useEffect(() => {
     async function getMenuItems() {
       try {
         setBannerItems(entries);
         //console.log(page_id.slug);
         try {
-           await bannerItems.forEach(element => {
-           console.log(element.contentful_id);
-
-           if (element.contentful_id == read_slug) {
-            //  const renderEntry = element;
-             setRenderEntry(element);
-             console.log(renderEntry);
-
-
-           }
-            //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-          });
+          await Promise.all(bannerItems.map(async (element) => {
+            console.log(element.contentful_id);
+  
+            if (element.contentful_id === read_slug) {
+              const entry = element;
+              await setRenderEntry(entry);
+              console.log(renderEntry);
+            }
+          }));
         } catch (error) {
           console.error("Error fetching menu items:", error);
         }
-          //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
+        //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw))));
         // console.log(entries[0]?.description.references[0].url);
-        setBackgroundImage(
-          entries[0]?.backgroundImage?.url || ""
-        );
+        setBackgroundImage(entries[0]?.backgroundImage?.url || "");
       } catch (error) {
         console.error("Error fetching menu items:", error);
       }
     }
     getMenuItems();
   }, [read_slug]);
+  
+  
+  
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -107,12 +105,20 @@ const Banner = (props) => {
       <div className="background-overlay"></div>
       <div className="container">
       <div className="d-flex">
-        {renderEntry.map((entries) => (
-          <React.Fragment key={entries.id}>
-            {renderRichText(JSON.parse(entries.description.raw))}
+          {/* {renderEntry ? (
+          <React.Fragment>
+            {renderRichText(JSON.parse(renderEntry.description.raw))}
           </React.Fragment>
-        ))}
+        ) : (   */}
+          {bannerItems.map((entries) => (
+            <React.Fragment key={entries.id}>
+              {renderRichText(JSON.parse(entries.description.raw))}
+            </React.Fragment>
+          ))
+           
+        } 
       </div>
+
       </div>
     </section>
   );
