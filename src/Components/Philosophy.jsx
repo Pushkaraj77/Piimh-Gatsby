@@ -140,7 +140,6 @@ const Philosophy = () => {
           );
         })}
       </section>
-      <h1>Philosophy</h1>
     </>
   );
 };
