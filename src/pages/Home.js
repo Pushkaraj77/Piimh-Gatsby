@@ -19,7 +19,7 @@ const Home = () => {
       <Philosophy/>
       <PhilosophyProgram/>
       <Director/>
-      <StayConnected/>
+      {/* <StayConnected/> */}
       <Footer/>
     </>
   );
