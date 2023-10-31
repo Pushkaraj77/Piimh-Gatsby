@@ -74,6 +74,7 @@
 
 import React from "react";
 import { graphql, useStaticQuery, Link} from "gatsby";
+import Address from "./Address";
 
 const StayConnected = () => {
   const data = useStaticQuery(query);
@@ -113,6 +114,7 @@ const StayConnected = () => {
                       </div>
                     </div>
                   </div>
+                  <Address/>
                 </div>
               </div>
             </React.Fragment>

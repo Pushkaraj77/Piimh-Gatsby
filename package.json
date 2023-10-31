@@ -16,6 +16,10 @@
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.2",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "aos": "^2.3.4",
     "babel-plugin-styled-components": "^2.1.4",
     "contentful": "^10.5.3",
