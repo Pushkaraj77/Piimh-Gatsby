@@ -30,7 +30,7 @@ const Banner = (props) => {
   
             if (element.contentful_id === read_slug) {
               const entry = element;
-              await setRenderEntry(entry);
+              setRenderEntry(entry);
               console.log(renderEntry);
             }
           }));
@@ -110,13 +110,20 @@ const Banner = (props) => {
             {renderRichText(JSON.parse(renderEntry.description.raw))}
           </React.Fragment>
         ) : (   */}
-          {bannerItems.map((entries) => (
+          {/* {bannerItems.map((entries) => (
             <React.Fragment key={entries.id}>
               {renderRichText(JSON.parse(entries.description.raw))}
             </React.Fragment>
           ))
            
-        } 
+        }  */}
+        {bannerItems
+            .filter((entries) => entries.contentful_id === read_slug)
+            .map((entry) => (
+              <React.Fragment key={entry.id}>
+                {renderRichText(JSON.parse(entry.description.raw))}
+              </React.Fragment>
+            ))}
       </div>
 
       </div>
