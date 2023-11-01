@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
-import { graphql, useStaticQuery} from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
-
-
 
 const Banner = (props) => {
   const [bannerItems, setBannerItems] = useState([]);
@@ -13,42 +11,25 @@ const Banner = (props) => {
   const [renderEntry, setRenderEntry] = useState([]);
   const page_id = props;
   const read_slug = page_id.slug;
+  const {slug} = useParams();
 
   const data = useStaticQuery(query);
   const entries = data.allContentfulBannerSection.nodes;
-
-  
 
   useEffect(() => {
     async function getMenuItems() {
       try {
         setBannerItems(entries);
         //console.log(page_id.slug);
-        try {
-          await Promise.all(bannerItems.map(async (element) => {
-            console.log(element.contentful_id);
-  
-            if (element.contentful_id === read_slug) {
-              const entry = element;
-              setRenderEntry(entry);
-              console.log(renderEntry);
-            }
-          }));
-        } catch (error) {
-          console.error("Error fetching menu items:", error);
-        }
-        //bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw))));
         // console.log(entries[0]?.description.references[0].url);
+        bannerItems.map((entries) => (console.log(JSON.parse(entries.description.raw))));
         setBackgroundImage(entries[0]?.backgroundImage?.url || "");
       } catch (error) {
         console.error("Error fetching menu items:", error);
       }
     }
     getMenuItems();
-  }, [read_slug]);
-  
-  
-  
+  }, [slug]);
 
   const renderCustomRichTextHeading = (node, children) => (
     <div className="custom-rich-text-heading">
@@ -79,12 +60,13 @@ const Banner = (props) => {
             renderNode: {
               ...headingRenderers,
               [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const url = entries[0].description.references[0].gatsbyImageData;
+                const url =
+                  entries[0].description.references[0].gatsbyImageData;
                 const altText = "Image";
                 return (
                   <div className="custom-rich-text-block">
                     {/* {console.log(node)} */}
-                    <GatsbyImage image = {url} alt = {altText}/>
+                    <GatsbyImage image={url} alt={altText} />
                   </div>
                 );
               },
@@ -96,7 +78,6 @@ const Banner = (props) => {
     return null;
   };
 
-
   return (
     <section
       className="banner"
@@ -104,7 +85,7 @@ const Banner = (props) => {
     >
       <div className="background-overlay"></div>
       <div className="container">
-      <div className="d-flex">
+        <div className="d-flex">
           {/* {renderEntry ? (
           <React.Fragment>
             {renderRichText(JSON.parse(renderEntry.description.raw))}
@@ -134,8 +115,8 @@ const Banner = (props) => {
 export default Banner;
 
 export const query = graphql`
-  query MyQuery ($slug: String){
-    allContentfulBannerSection (filter: { slug: {eq: $slug}}){
+  query MyQuery {
+    allContentfulBannerSection{
       nodes {
         id
         title
@@ -153,4 +134,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

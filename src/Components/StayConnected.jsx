@@ -64,7 +64,7 @@
 //             </React.Fragment>
 //           );
 //         })}
-//       </section> */} 
+//       </section> */}
 //       <h1>Stay Connected</h1>
 //     </>
 //   );
@@ -73,18 +73,15 @@
 // export default StayConnected;
 
 import React from "react";
-import { graphql, useStaticQuery, Link} from "gatsby";
-
+import { graphql, useStaticQuery, Link } from "gatsby";
 const StayConnected = () => {
   const data = useStaticQuery(query);
   const { allContentfulComponent } = data;
-
   return (
     <>
       <section className="stay-connected">
         {allContentfulComponent.nodes.map((item) => {
           const { title, subTitle, image, googleMapsUrl } = item;
-
           return (
             <React.Fragment key={item.id}>
               <div className="basicComponent">
@@ -104,11 +101,7 @@ const StayConnected = () => {
                           ></iframe>
                         </div>
                         <div>
-                          <img
-                            src={image.file.url}
-                            alt={title}
-                            width={100}
-                          />
+                          <img src={image.file.url} alt={title} width={100} />
                         </div>
                       </div>
                     </div>
@@ -122,23 +115,21 @@ const StayConnected = () => {
     </>
   );
 };
-
 export default StayConnected;
-
 export const query = graphql`
-query{
-  allContentfulComponent(filter: {title: {eq: "STAY CONNECTED"}}) {
-    nodes {
-      id
-      title
-      subTitle
-      image {
-        file {
-          url
+  query {
+    allContentfulComponent(filter: { title: { eq: "STAY CONNECTED" } }) {
+      nodes {
+        id
+        title
+        subTitle
+        image {
+          file {
+            url
+          }
         }
+        googleMapsUrl
       }
-      googleMapsUrl
     }
   }
-}`;
-
+`;

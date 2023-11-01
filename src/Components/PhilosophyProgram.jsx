@@ -66,7 +66,7 @@ const PhilosophyProgram = () => {
       setphilosophyProgramItems(entries.reverse());
       // console.log(entries);
       // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-      console.log(entries[0]?.description.references[0]?.url);
+      // console.log(entries[0]?.description.references[0]?.url);
       setImg(
         entries[0]?.img?.url || ""
       );

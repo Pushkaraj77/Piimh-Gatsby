@@ -10,15 +10,16 @@ import Footer from "../Components/Footer";
 
 const Home = () => {
   const id = "4hURH4J5WPqHSjm3vABwxo";
+  const dir_id = "Hello";
   console.log("Slug for Home Page:", id);
   return (
     <>
       <Header/>
       <Banner slug={id} />
-      {/* <BasicComponent/> */}
+      <BasicComponent/>
       <Philosophy/>
       <PhilosophyProgram/>
-      <Director/>
+      <Director slug = {dir_id}/>
       <StayConnected/>
       <Footer/>
     </>

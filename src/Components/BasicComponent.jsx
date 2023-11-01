@@ -1,38 +1,63 @@
 import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import client from "../client";
-// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { graphql, useStaticQuery } from "gatsby";
+
+
+export const query = graphql`
+  {
+    allContentfulBasicPage {
+      nodes {
+        title
+        subTitle
+        slug
+        contentful_id
+        pageComponent {
+          ... on ContentfulComponent {
+            bgColor
+            ctaButton
+          }
+        }
+        description {
+          raw
+        }
+      }
+    }
+  }
+`
 
 const BasicComponent = () => {
-  // const { slug } = useParams();
-  // const [entry, setEntry] = useState([]);
+  const { slug } = useParams();
+  const [entry, setEntry] = useState([]);
+  const data = useStaticQuery(query);
+  const entries = data.allContentfulBasicPage.nodes;
 
-  // useEffect(() => {
-  //   const fetchPage = async () => {
-  //     try {
-  //       const response = await client.getEntries({
-  //         content_type: "component",
-  //         "sys.id":"j1FEf5PgGNafEVuvrRmSE",
-  //       });
-  //       if (response.items.length) {
-  //         setEntry(response.items);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchPage();
-  // }, [slug]);
+  useEffect(() => {
+    const fetchPage = async () => {
+      try {
+        setEntry(entries);
+        // entry.map((entries) => (console.log(entries.description)));
+        // console.log(entries[0]);
+        // entry.map((entries) => (console.log(entries.title)));
+      } catch (error) {
+        console.error("Error fetching Basic page items:", error);
+      }
+    };
+
+    fetchPage()
+  }, [slug])
+  
 
   return (
     <>
-      {/* <section className="Home-about">
+      <section className="Home-about">
         {entry.map((item) => {
-          const { title, description, subTitle, bgColor, ctaButton, link } =
-            item.fields;
-          console.log(item.fields);
-          const id = item.sys.id;
-          const richTextContent = documentToReactComponents(description);
+          const { title, subTitle, bgColor } =
+          item;
+          const id = item.contentful_id;
+          console.log(item);
+          // const richTextContent = documentToReactComponents(description);
           return (
             <React.Fragment key={id}>
               <div
@@ -43,12 +68,12 @@ const BasicComponent = () => {
                   <div className="basicComponent_wrapper">
                     <h2>{title}</h2>
                     <h3>{subTitle}</h3>
-                    <div className="basicComponent_content">
+                    {/* <div className="basicComponent_content">
                       {richTextContent}
-                      <a href={link} className="cta-button">
+                      <a href={slug} className="cta-button">
                       {ctaButton}
                     </a>
-                    </div>
+                    </div> */}
                     
                   </div>
                 </div>
@@ -56,7 +81,7 @@ const BasicComponent = () => {
             </React.Fragment>
           );
         })}
-      </section> */}
+      </section>
       <h1>basicComponent</h1>
     </>
   );
