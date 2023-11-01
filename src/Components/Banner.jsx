@@ -21,8 +21,8 @@ const Banner = (props) => {
       try {
         setBannerItems(entries);
         //console.log(page_id.slug);
-        bannerItems.map((entries) => (console.log(JSON.parse(entries))));
         // console.log(entries[0]?.description.references[0].url);
+        bannerItems.map((entries) => (console.log(JSON.parse(entries.description.raw))));
         setBackgroundImage(entries[0]?.backgroundImage?.url || "");
       } catch (error) {
         console.error("Error fetching menu items:", error);
@@ -91,18 +91,22 @@ const Banner = (props) => {
             {renderRichText(JSON.parse(renderEntry.description.raw))}
           </React.Fragment>
         ) : (   */}
-          {bannerItems.map((element) => {
-            // console.log(element.contentful_id);
-            // if (element.contentful_id === read_slug) {
-            //   const entry = element;
-            //   setRenderEntry(entry);
-            //   console.log(renderEntry);
-            <React.Fragment key={element.id}>
-              {renderRichText(JSON.parse(element.description.raw))}
+          {/* {bannerItems.map((entries) => (
+            <React.Fragment key={entries.id}>
+              {renderRichText(JSON.parse(entries.description.raw))}
             </React.Fragment>
-            },
-          )}
-        </div>
+          ))
+           
+        }  */}
+        {bannerItems
+            .filter((entries) => entries.contentful_id === read_slug)
+            .map((entry) => (
+              <React.Fragment key={entry.id}>
+                {renderRichText(JSON.parse(entry.description.raw))}
+              </React.Fragment>
+            ))}
+      </div>
+
       </div>
     </section>
   );
@@ -111,8 +115,8 @@ const Banner = (props) => {
 export default Banner;
 
 export const query = graphql`
-  query MyQuery($slug: String) {
-    allContentfulBannerSection(filter: { slug: { eq: $slug } }) {
+  query MyQuery {
+    allContentfulBannerSection{
       nodes {
         id
         title

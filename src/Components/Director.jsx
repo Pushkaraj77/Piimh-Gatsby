@@ -40,6 +40,7 @@ const Director = () => {
   const { slug } = useParams();
   const data = useStaticQuery(query);
   const entries = data.allContentfulComponent.nodes;
+
   // const [entry, setEntry] = useState([]);
 
   useEffect(() => {
@@ -61,9 +62,10 @@ const Director = () => {
     async function fetchPage() {
       try {
         setDirectorItems(entries.reverse());
+        // console.log(page_id);
         // console.log(entries);
         // bannerItems.map(((entries) => (console.log(JSON.parse(entries.description.raw)))));
-        console.log(entries[0]?.description.references[0]?.url);
+        // console.log(entries[0]?.description.references[0]?.url);
         setImg(
           entries[0]?.img?.url || ""
         );
